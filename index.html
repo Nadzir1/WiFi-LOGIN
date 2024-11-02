@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi-LOGIN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=poppins:wght@300;400;500;600;700;800;900&display=swap");
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "poppins", sans-serif;
+        }
+
+        body {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url(SMKN\ 1\ PACET.png) no-repeat;
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 420px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, .2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.329);
+            color: #fff;
+            border-radius: 10px;
+            padding: 30px 40px;
+            z-index: 2;
+        }
+
+        .wrapper h1 {
+            font-size: 36px;
+            text-align: center;
+        }
+
+        .wrapper .input-box {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            margin: 30px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            border: 2px solid rgba(255, 255, 255, .2);
+            border-radius: 40px;
+            font-size: 16px;
+            color: #fff;
+            padding: 20px 45px 20px 20px;
+        }
+
+        .input-box input::placeholder {
+            color: #fff;
+        }
+
+        .input-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+        }
+
+        .wrapper .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14.5px;
+            margin: -15px 0 15px;
+        }
+
+        .remember-forgot label input {
+            accent-color: #fff;
+            margin-right: 3px;
+        }
+
+        .remember-forgot a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .remember-forgot a:hover {
+            text-decoration: underline;
+        }
+
+        .wrapper .btn {
+            width: 100%;
+            height: 45px;
+            background: #fff;
+            border: none;
+            outline: none;
+            border-radius: 40px;
+            box-shadow: 0 0 10px rgb(0, 0, 0, .1);
+            cursor: pointer;
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .wrapper .register-link {
+            font-size: 14.5px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .register-link p a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-link p a:hover {
+            text-decoration: underline;
+        }
+
+        .form {
+            display: none;
+        }
+
+        .form.active {
+            display: block;
+        }
+
+        .error-message {
+            color: #ff3333;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+            background: transparent;
+        }
+
+        .success-message {
+            color: #33ff33;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+            background: transparent;
+            padding: 5px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle -->
+    <div id="particles-js"></div>
+    
+    <!-- Form Login -->
+    <div class="wrapper form active" id="loginForm">
+        <h1>Login</h1>
+        <div class="input-box">
+            <input type="text" placeholder="Username" id="loginUsername" required>
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="input-box">
+            <input type="password" placeholder="Password" id="loginPassword" required>
+            <i class="fas fa-lock"></i>
+        </div>
+        <div class="remember-forgot">
+            <label><input type="checkbox" id="rememberMe"> Remember me</label>
+            <a href="#" id="showForgotPassword">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn" onclick="login()">Login</button>
+        <div class="register-link">
+            <p>Don't have an account? <a href="#" id="showRegister">Register</a></p>
+        </div>
+        <div class="error-message" id="loginError"></div>
+        <div class="success-message" id="loginSuccess"></div>
+    </div>
+
+    <!-- Form Register -->
+    <div class="wrapper form" id="registerForm">
+        <h1>Register</h1>
+        <div class="input-box">
+            <input type="text" placeholder="Username" id="registerUsername" required>
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="input-box">
+            <input type="email" placeholder="Email" id="registerEmail" required>
+            <i class="fas fa-envelope"></i>
+        </div>
+        <div class="input-box">
+            <input type="password" placeholder="Password" id="registerPassword" required>
+            <i class="fas fa-lock"></i>
+        </div>
+        <div class="input-box">
+            <input type="password" placeholder="Confirm Password" id="confirmPassword" required>
+            <i class="fas fa-lock"></i>
+        </div>
+        <button type="submit" class="btn" onclick="register()">Register</button>
+        <div class="register-link">
+            <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+        </div>
+        <div class="error-message" id="registerError"></div>
+        <div class="success-message" id="registerSuccess"></div>
+    </div>
+
+    <!-- Form Lupa Password -->
+    <div class="wrapper form" id="forgotPasswordForm">
+        <h1>Reset Password</h1>
+        <div class="input-box">
+            <input type="email" placeholder="Email" id="resetEmail" required>
+            <i class="fas fa-envelope"></i>
+        </div>
+        <button type="submit" class="btn" onclick="resetPassword()">Reset Password</button>
+        <div class="register-link">
+            <p>Remember your password? <a href="#" id="backToLogin">Back to Login</a></p>
+        </div>
+        <div class="error-message" id="resetError"></div>
+        <div class="success-message" id="resetSuccess"></div>
+    </div>
+
+    <script>
+        // Inisialisasi particles.js
+        document.addEventListener("DOMContentLoaded", function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 90,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle"
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 100,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "repulse"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+
+        // Simulasi database sederhana
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Fungsi untuk menampilkan pesan error
+        function showError(formId, message) {
+            const errorElement = document.getElementById(formId + 'Error');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Fungsi untuk menampilkan pesan sukses
+        function showSuccess(formId, message) {
+            const successElement = document.getElementById(formId + 'Success');
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            setTimeout(() => {
+                successElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Fungsi untuk beralih antar form
+        function showForm(formId) {
+            document.querySelectorAll('.form').forEach(form => form.classList.remove('active'));
+            document.getElementById(formId).classList.add('active');
+        }
+
+        // Event listeners untuk navigasi
+        document.getElementById('showRegister').addEventListener('click', () => showForm('registerForm'));
+        document.getElementById('showLogin').addEventListener('click', () => showForm('loginForm'));
+        document.getElementById('showForgotPassword').addEventListener('click', () => showForm('forgotPasswordForm'));
+        document.getElementById('backToLogin').addEventListener('click', () => showForm('loginForm'));
+
+        // Fungsi login
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                showSuccess('login', 'Login berhasil!');
+                if (rememberMe) {
+                    localStorage.setItem('rememberedUser', username);
+                }
+                setTimeout(() => {
+                    alert('Redirect ke dashboard...');
+                }, 1000);
+            } else {
+                showError('login', 'Username atau password salah!');
+            }
+        }
+
+        // Fungsi register
+        function register() {
+            const username = document.getElementById('registerUsername').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showError('register', 'Password tidak cocok!');
+                return;
+            }
+
+            if (users.some(u => u.username === username)) {
+                showError('register', 'Username sudah digunakan!');
+                return;
+            }
+
+            if (users.some(u => u.email === email)) {
+                showError('register', 'Email sudah terdaftar!');
+                return;
+            }
+
+            users.push({ username, email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            showSuccess('register', 'Registrasi berhasil! Silakan login.');
+            setTimeout(() => {
+                showForm('loginForm');
+            }, 1500);
+        }
+
+        // Fungsi reset password
+        function resetPassword() {
+            const email = document.getElementById('resetEmail').value;
+            const user = users.find(u => u.email === email);
+
+            if (user) {
+                showSuccess('reset', 'Link reset password telah dikirim ke email Anda!');
+                setTimeout(() => {
+                    showForm('loginForm');
+                }, 2000);
+            } else {
+                showError('reset', 'Email tidak ditemukan!');
+            }
+        }
+
+        // Check remembered user on page load
+        window.onload = function() {
+            const rememberedUser = localStorage.getItem('rememberedUser');
+            if (rememberedUser) {
+                document.getElementById('loginUsername').value = rememberedUser;
+                document.getElementById('rememberMe').checked = true;
+            }
+        }
+    </script>
+</body>
+</html>
