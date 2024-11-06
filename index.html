@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WiFi-LOGIN</title>
     <link rel="icon" href="logo.png" type="image/x-icon">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <audio id="pageSound" src="CLICK.MP3" preload="auto"></audio>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=poppins:wght@300;400;500;600;700;800;900&display=swap");
         * {
@@ -14,6 +16,51 @@
             padding: 0;
             box-sizing: border-box;
             font-family: "poppins", sans-serif;
+        }
+
+                                                            /* musik */                         
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-control button {
+            background: transparent;
+            border: none;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            font-size: 20px;
+            width: 40px;
+            height: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .music-control button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .music-control .music-title {
+            color: rgb(0, 0, 0);
+            font-size: 14px;
+            margin-left: 5px;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
 
         body {
@@ -26,6 +73,59 @@
             background-size: cover;
             background-position: center;
             overflow: hidden;
+        }
+
+        /* Contact Box Styles */
+        .contact-box {
+            font-size: small;
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.425);
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .contact-box h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 24px;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+
+        .social-icons .fa-whatsapp:hover {
+            color: #25D366;
+        }
+
+        .social-icons .fa-instagram:hover {
+            color: #E4405F;
+        }
+
+        .social-icons .fa-telegram:hover {
+            color: #0088cc;
         }
 
                                                     /* Dibuat oleh nadzir */
@@ -44,7 +144,7 @@
         #particles-js {
             position: absolute;
             top: 0;
-            left: 0;
+            left: 0;    
             width: 100%;
             height: 100%;
             z-index: 1;
@@ -56,7 +156,7 @@
             background: transparent;
             border: 2px solid rgba(255, 255, 255, .2);
             backdrop-filter: blur(5px);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.329);
+            box-shadow: 0 0 10px rgb(0, 0, 0);
             color: #fff;
             border-radius: 10px;
             padding: 30px 40px;
@@ -86,6 +186,7 @@
             font-size: 16px;
             color: #fff;
             padding: 20px 45px 20px 20px;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         .input-box input::placeholder {
@@ -135,6 +236,46 @@
             font-weight: 600;
         }
 
+            /* Halaman Sukses */
+        .success-page {
+            display: none;
+            text-align: center;
+            color: white;
+            animation: fadeIn 0.5s ease-in-out;
+            position: relative;
+            width: 420px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.397);
+            border-radius: 10px;
+            padding: 30px 40px;
+            z-index: 2;
+        }
+
+        .success-page h1 {
+            font-size: 2.5rem;
+            margin: 20px 0;
+            text-shadow: 0 0 10px #00e6e6;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-page p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .success-page img {
+            width: 200px;
+            height: auto;
+            margin: 20px 0;
+            animation: float 3s infinite alternate ease-in-out;
+        }
+
         .wrapper .register-link {
             font-size: 14.5px;
             text-align: center;
@@ -179,8 +320,40 @@
         }
     </style>
 </head>
-<body>
-    <!-- Dibuat oleh Nadzir ganteng -->
+<body> 
+                                                            <!-- Musik -->
+    <audio id="bgMusic" loop>
+        <source src="Happy Piano.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+                                                        <!-- Kontrol musik -->
+    <div class="music-control">
+        <button id="musicToggle" onclick="toggleMusic()">
+            <i class="fas fa-play" id="musicIcon"></i>
+        </button>
+        <span class="music-title">Music</span>
+    </div>
+
+                                                        <!-- Hubungi kami -->
+    <div class="contact-box">
+        <h3>CONTACT US</h3>
+        <div class="social-icons">
+            <a href="https://wa.me/081224284711" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://instagram.com/Nadzircreazy" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/+6281224284711" target="_blank"><i class="fab fa-telegram"></i></a>
+        </div>
+    </div>
+
+                                                        <!-- Halaman Sukses -->
+  <div class="success-page" id="successPage">
+    <h1>Selamat Menikmati!</h1>
+    <p>Anda berhasil terhubung. Nikmati internetan dengan puas dan lancar!</p>
+    <img src="pastinet.png" alt="Happy Icon">
+    <p>Terima kasih telah menggunakan layanan kami!</p>
+  </div>
+
+                                                <!-- Dibuat oleh Nadzir ganteng -->
           <div className="relative min-h-screen">
             <div className="login-box">
             </div>
@@ -257,6 +430,61 @@
     </div>
 
     <script>
+        // Sound Effect ketika berpindah halaman
+        function playSound() {
+        var sound = document.getElementById("pageSound");
+        sound.play();
+    }
+    
+    // Panggil suara ketika halaman dimuat
+    window.addEventListener("load", playSound);
+    
+    // Suara berbunyi ketuka berpindah halaman
+    document.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", function() {
+            playSound();
+        });
+    });
+
+        const bgMusic = document.getElementById('bgMusic');
+        const musicIcon = document.getElementById('musicIcon');
+        let isMusicPlaying = false;
+
+        function initializeMusic() {
+            bgMusic.volume = 0.5; // Volume 50%
+            
+            document.removeEventListener('click', initializeMusic);
+            document.removeEventListener('keydown', initializeMusic);
+        }
+
+        document.addEventListener('click', initializeMusic);
+        document.addEventListener('keydown', initializeMusic);
+
+        function toggleMusic() {
+            if (!isMusicPlaying) {
+                bgMusic.play()
+                    .then(() => {
+                        isMusicPlaying = true;
+                        musicIcon.className = 'fas fa-pause';
+                    })
+                    .catch((error) => {
+                        console.log("Playback failed:", error);
+                    });
+            } else {
+                bgMusic.pause();
+                isMusicPlaying = false;
+                musicIcon.className = 'fas fa-play';
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp' && bgMusic.volume < 1) {
+                bgMusic.volume = Math.min(1, bgMusic.volume + 0.1);
+            } else if (e.key === 'ArrowDown' && bgMusic.volume > 0) {
+                bgMusic.volume = Math.max(0, bgMusic.volume - 0.1);
+            }
+        });
+
         // Inisialisasi particles.js
         document.addEventListener("DOMContentLoaded", function() {
             particlesJS('particles-js', {
@@ -313,7 +541,7 @@
                         "resize": true
                     }
                 },
-                "retina_detect": true
+                "retina_detect": true 
             });
         });
 
@@ -331,13 +559,24 @@
         }
 
         // Fungsi untuk menampilkan pesan sukses
-        function showSuccess(formId, message) {
+        function showSuccess(formId, message, isLogin = false) {
             const successElement = document.getElementById(formId + 'Success');
             successElement.textContent = message;
             successElement.style.display = 'block';
-            setTimeout(() => {
-                successElement.style.display = 'none';
-            }, 3000);
+            
+            if (isLogin) {
+                // Hanya tampilkan halaman sukses jika ini adalah login yang berhasil
+                document.getElementById('loginForm').style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById('loginForm').style.display = "none";
+                    document.getElementById('successPage').style.display = "block";
+                }, 500);
+            } else {
+                // Untuk register dan reset password, hanya tampilkan pesan
+                setTimeout(() => {
+                    successElement.style.display = 'none';
+                }, 3000);
+            }
         }
 
         // Fungsi untuk beralih antar form
@@ -361,12 +600,12 @@
             const user = users.find(u => u.username === username && u.password === password);
 
             if (user) {
-                showSuccess('login', 'Login berhasil!');
+                showSuccess('login', 'Login berhasil!', true); // Parameter true untuk menandakan ini adalah login
                 if (rememberMe) {
                     localStorage.setItem('rememberedUser', username);
                 }
                 setTimeout(() => {
-                    alert('Redirect ke dashboard...');
+                    alert('Tunggu Sebentar...');
                 }, 1000);
             } else {
                 showError('login', 'Username atau password salah!');
